@@ -121,7 +121,6 @@ class TwoSpaceCopyingCollector extends Collector {
     }
     
     copyFrom(pointer) {
-        console.log(`tpr: ${pointer}`);
         let freePointer = this.heap.heapGet(3);
         switch(this.heap.heapGet(pointer)) {
             case "forward":
@@ -149,12 +148,8 @@ class TwoSpaceCopyingCollector extends Collector {
     };
     
     collectGarbageStep() {
-        console.log("step");
-        
         let scanPointer = this.heap.heapGet(2);
-        console.log(`sp: ${scanPointer}`);
         let tag = this.heap.heapGet(scanPointer);
-        console.log(`tag: ${tag}`);
         switch(tag) {
             case "flat":
                 this.heap.heapSet(2, scanPointer + 2);
@@ -171,9 +166,6 @@ class TwoSpaceCopyingCollector extends Collector {
     }
     
     collectGarbage(root1, root2) {
-        console.log("collecting garbage");
-        console.log(`roots: ${root1} ${root2}`);
-        
         this.heap.heapSet(2, this.heap.heapGet(1));
         this.heap.heapSet(3, this.heap.heapGet(1));
         
@@ -188,8 +180,6 @@ class TwoSpaceCopyingCollector extends Collector {
             newRoot2 = this.copyFrom(root2);
             this.moveRoot(root2, newRoot2);
         }
-
-        console.log(this.heap.data);
 
         let currentRoots = this.roots.values().toArray();
         for (const root of currentRoots) {
@@ -251,6 +241,7 @@ class TwoSpaceCopyingCollector extends Collector {
                         }
                     } else {
                         console.error(`Collector.allocate: out of memory in allocating: (flat ${data.value})`);
+                        return null;
                     }
                 }
                 break;
@@ -276,6 +267,7 @@ class TwoSpaceCopyingCollector extends Collector {
                         }
                     } else {
                         console.error(`Collector.allocate: out of memory in allocating: (cons ${data.root1} ${data.root2})`);
+                        return null;
                     }
                 }
                 break;
@@ -283,5 +275,7 @@ class TwoSpaceCopyingCollector extends Collector {
                 console.error(`Collector.allocate: unknown tag: ${tag}`);
                 return null;
         }
+
+        return allocationPointer;
     };
 }
