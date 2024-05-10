@@ -1,0 +1,6 @@
+*.rkt
+*.py
+.DS_Store
+.vscode
+**/.DS_Store
+
