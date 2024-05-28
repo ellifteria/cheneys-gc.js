@@ -70,17 +70,21 @@ class TwoSpaceCopyingCollector extends Collector {
         
         let newRoot1 = false;
         let newRoot2 = false;
+
+        let newRoots = new Set();
         
         if (root1 != false) {
             newRoot1 = this.copyFrom(root1);
             this.moveRoot(root1, newRoot1);
+            newRoots.add(root1);
         }
         if (root2 != false) {
             newRoot2 = this.copyFrom(root2);
             this.moveRoot(root2, newRoot2);
+            newRoots.add(root2);
         }
 
-        let currentRoots = this.roots.values().toArray();
+        let currentRoots = this.roots.difference(newRoots).values().toArray();
         for (const root of currentRoots) {
             let newRoot = this.copyFrom(root);
             this.moveRoot(root, newRoot);
