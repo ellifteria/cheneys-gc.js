@@ -17,27 +17,27 @@ class Heap {
         this.data = new Array(size);
     }
     
-    heapSet(location, value) {
-        if (!isInteger(location) || location >= this.size || location < 0) {
-            console.error(`Heap.heapSet: illegal location: ${location}`);
+    heapSet(address, value) {
+        if (!isInteger(address) || address >= this.size || address < 0) {
+            console.error(`Heap.heapSet: illegal location: ${address}`);
             return null;
         }
 
-        this.data[location] = value;
+        this.data[address] = value;
     };
 
-    heapGet(location) {
-        if (!isInteger(location) || location >= this.size || location < 0) {
-            console.error(`Heap.heapGet: illegal location: ${location}`);
+    heapGet(address) {
+        if (!isInteger(address) || address >= this.size || address < 0) {
+            console.error(`Heap.heapGet: illegal location: ${address}`);
             return null;
         }
 
-        return this.data[location];
+        return this.data[address];
     };
 
 
-    heapFill(start, end, value) {
-        for (let i = start; i < end; i++) {
+    heapFill(startAddress, endAddress, value) {
+        for (let i = startAddress; i < endAddress; i++) {
             this.heapSet(i, value);
         }
     };
